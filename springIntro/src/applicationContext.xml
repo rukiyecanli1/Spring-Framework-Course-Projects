@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:context="http://www.springframework.org/schema/context"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context.xsd">
+  
+<!--   sabit değerleri values.properties dosyasından context'e dahil ediyoruz -->
+  <context:property-placeholder location="classpath:values.properties"/>  
+ 
+ <!--  //database isimli bir bean talebinde bulunulursa arka planda mysql
+ customerdal'ı new'liyor ve o nesneyi bize veriyor
+ ctrl+shift+/ -->
+ <bean id="database" class="springIntro.MsSqlCustomerDal">
+    <property name="connectionString" value="${database.connectionString}"/>
+ </bean>
+ 
+ <!--  //service isimli bir bean talebinde bulunulursa arka planda 
+CustomerManager'ı new'liyor ve o nesneyi bize veriyor
+    ctrl+shift+/ -->
+ <bean id="service" class="springIntro.CustomerManager">
+     <!--    <constructor-arg ref = "database"/> crtl+shift+c -->
+     <property name="customerDal" ref="database"/>
+ </bean>
+ 
+</beans>
